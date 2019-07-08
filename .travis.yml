@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+  - "node"
+  - "10"
+jobs:
+  include:
+    - stage: test
+      script: "npm run test:lint"
+    - stage: test
+      script: "npm run test:security"
+    - stage: release
+      node_js: lts/*
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - npx semantic-release
+notifications:
+  email:
+    recipients: dipustovit@gmail.com
+    on_success: change
+    on_failure: always
