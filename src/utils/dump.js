@@ -6,6 +6,8 @@ export function dumpUpdate(update) {
 }
 
 export function dumpMessage(message) {
+    if (!message) return null;
+
     return {
         id      : message.message_id,
         from    : dumpUser(message.from),
@@ -19,6 +21,8 @@ export function dumpMessage(message) {
 }
 
 export function dumpUser(user) {
+    if (!user) return null;
+
     return {
         id        : user.id,
         type      : user.is_bot ? 'BOT' : 'USER',
@@ -36,6 +40,8 @@ const CHAT_TYPES = {
 };
 
 export function dumpChat(chat) {
+    if (!chat) return null;
+
     return {
         id    : chat.id,
         type  : CHAT_TYPES[chat.type],
@@ -44,6 +50,8 @@ export function dumpChat(chat) {
 }
 
 export function dumpSticker(sticker) {
+    if (!sticker) return null;
+
     return {
         id     : sticker.file_id,
         width  : sticker.width,

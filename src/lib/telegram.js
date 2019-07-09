@@ -2,9 +2,9 @@ import { inspect } from 'util';
 import ms from 'ms';
 import config from 'config';
 import { dumpUpdate } from 'utils/dump';
-import TelegramApiError from 'errors/TelegramApiError';
+import TelegramApiClient from '../api/TelegramApiClient';
 import Poll from './polling';
-import TelegramApiClient from './api/TelegramApiClient';
+import handlebars from './handlebars';
 
 class TelegramApi {
     constructor({ id, token, polling }) {
@@ -26,51 +26,43 @@ class TelegramApi {
     polling = async () => {
         const updates = await this.getUpdates();
 
+        await handlebars.ready;
+
         if (updates.length) {
             this.lastUpdate = updates[updates.length - 1].id;
         }
 
         console.log(inspect(updates, { showHidden: false, depth: null }));
+        await Promise.all(updates.map(update => {
+            const html = handlebars.templates.REPORT({ update });
+
+            console.log('html: ', html);
+
+            return this.sendMessage('238585617', html);
+        }));
     }
 
     getUpdates = async () => {
-        try {
-            const data = await this.api.get('/getUpdates', {
-                limit  : 10,
-                offset : this.lastUpdate + 1
-                // timeout : this.pollTimeout
-            });
+        const data = await this.api.get('/getUpdates', {
+            limit  : 10,
+            offset : this.lastUpdate + 1
+            // timeout : this.pollTimeout
+        });
 
-            return data.map(dumpUpdate);
-        } catch (error) {
-            throw new TelegramApiError(error);
-        }
+        return data.map(dumpUpdate);
     }
 
-    // async sendMessage(chatId, template) {
-    //     return axios({
-    //         method : 'POST',
-    //         data   : {
-    //             'parse_mode' : 'HTML',
-    //             text         : template,
-    //             'chat_id'    : chatId
-    //         },
-    //         timeout : 10000,
-    //         url     : `${this.baseUrl}/sendMessage`
-    //     });
-    // }
+    async sendMessage(chatId, text) {
+        const data = await this.api.post('/sendMessage', {
+            'parse_mode' : 'HTML',
+            'chat_id'    : chatId,
+            text
+        });
 
-    // async sendMeme(chatId, fileId) {
-    //     return axios({
-    //         method : 'POST',
-    //         data   : {
-    //             document  : fileId,
-    //             'chat_id' : chatId
-    //         },
-    //         timeout : 10000,
-    //         url     : `${this.baseUrl}/sendDocument`
-    //     });
-    // }
+        console.log('data: ', data);
+
+        return data;
+    }
 }
 
 export default new TelegramApi({

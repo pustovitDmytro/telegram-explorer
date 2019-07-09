@@ -54,14 +54,15 @@
     "eslint-plugin-no-require-lodash": "^1.1.0",
     "eslint-plugin-prefer-spread": "^1.0.3",
     "eslint-plugin-react": "^7.12.4",
-    "fs-extra": "^8.0.1",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
     "semantic-release": "^15.13.14"
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "handlebars": "^4.1.2",
     "logger-decorator": "^0.3.2",
+    "fs-extra": "^8.0.1",
     "ms": "^2.1.2"
   }
 }
