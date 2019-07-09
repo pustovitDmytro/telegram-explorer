@@ -16,6 +16,18 @@
            "legacy": true
         }
       ],
+      [
+        "module-resolver",
+        {
+          "root": ["./src"],
+          "alias": {
+            "utils": "./src/utils",
+            "lib": "./src/lib",
+            "errors": "./src/errors",
+            "constants": "./src/constants/"
+          }
+        }
+      ],
       "@babel/plugin-proposal-class-properties",
       "@babel/plugin-proposal-optional-chaining"
     ],

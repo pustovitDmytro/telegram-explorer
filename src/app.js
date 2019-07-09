@@ -1,3 +1,3 @@
-import './api';
+import './lib/telegram';
 
 console.log('loaded');

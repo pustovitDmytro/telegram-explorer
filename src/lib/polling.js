@@ -9,7 +9,8 @@ export default class Poll {
                 await this.run();
                 this.start();
             } catch (error) {
-                console.error('POLL_ERROR', error);
+                console.error('POLLING_ERROR');
+                console.error(error);
                 this.start();
             }
         }, this.timeout);
