@@ -1,5 +1,5 @@
-import config from '../etc/config.json';
+// import config from '../etc/config.json';
 
 // TODO validate
-export default config;
+export default {};
 

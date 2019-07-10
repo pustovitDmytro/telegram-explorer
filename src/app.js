@@ -1,12 +1,12 @@
-import './lib/telegram';
+// import './lib/telegram';
 import express     from 'express';
 import router      from './router';
-
-console.log('loaded');
 
 const app = express();
 
 app.use('/api/v1', router);
-app.listen('8080', () => {
-    console.log('APP STARTING');
+const port = process.env.PORT;
+
+app.listen(port, () => {
+    console.log(`APP STARTING AT ${port} PORT`);
 });

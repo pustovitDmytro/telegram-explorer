@@ -7,6 +7,7 @@
     "MOCHA_OPTS": "--timeout 60000 --exit --reporter spec --ui qunit tests/**/*.js"
   },
   "scripts": {
+    "build": "babel src --out-dir ./build",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "test:security": "npm audit",
     "test:lint": "eslint src",
