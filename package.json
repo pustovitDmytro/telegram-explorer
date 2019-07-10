@@ -60,9 +60,10 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "express": "^4.17.1",
+    "fs-extra": "^8.0.1",
     "handlebars": "^4.1.2",
     "logger-decorator": "^0.3.2",
-    "fs-extra": "^8.0.1",
     "ms": "^2.1.2"
   }
 }
