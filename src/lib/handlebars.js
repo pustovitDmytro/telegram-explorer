@@ -13,6 +13,7 @@ handlebars.registerHelper('lower', function (string) {
 class Handlebars {
     constructor({ templatesFolder }) {
         this.ready = this._initTemplates(templatesFolder);
+        // TODO async loading
     }
     async _initTemplates(folder) {
         const templateFileNames = await fs.readdir(folder);
