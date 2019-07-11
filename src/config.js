@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 function loadJSON(filePath, defaults = {}) {
     const file = path.resolve(__dirname, filePath);
 
-    return fs.exists(file)
+    return fs.existsSync(file)  // eslint-disable-line no-sync
         ? JSON.parse(fs.readFileSync(file, 'utf8')) // eslint-disable-line no-sync
         : defaults;
 }
