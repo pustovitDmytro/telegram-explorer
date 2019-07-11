@@ -1,7 +1,7 @@
-import { inspect } from 'util';
+// import { inspect } from 'util';
 import ms from 'ms';
 import config from 'config';
-import { dumpUpdate } from 'utils/dump';
+import { dumpUpdate, dumpMessage } from 'utils/dump';
 import TelegramApiClient from '../api/TelegramApiClient';
 import Poll from './polling';
 import handlebars from './handlebars';
@@ -12,16 +12,27 @@ class TelegramApi {
             timeout : '10s',
             url     : `https://api.telegram.org/bot${id}:${token}`
         });
-        if (polling) {
-            this.lastUpdate = 0;
-            this.pollTimeout = ms(polling);
-            const poll = new Poll({
-                timeout : this.pollTimeout,
-                run     : this.polling
-            });
+        this.ready = this._init({ polling });
+    }
+    _init({ polling }) {
+        if (polling) return this._initPolling(polling);
+    }
+    _initPolling(pollingTime) {
+        this.lastUpdate = 0;
+        this.pollTimeout = ms(pollingTime);
+        const poll = new Poll({
+            timeout : this.pollTimeout,
+            run     : this.polling
+        });
 
-            poll.start();
-        }
+        poll.start();
+        console.log(`POLLING STARTED WITH INTERVAL ${pollingTime}`);
+    }
+    processUpdate = update => {
+        const { message } = update;
+        const html = handlebars.templates.REPORT({ message });
+
+        return this.sendMessage(message.from.id, html);
     }
     polling = async () => {
         const updates = await this.getUpdates();
@@ -32,14 +43,8 @@ class TelegramApi {
             this.lastUpdate = updates[updates.length - 1].id;
         }
 
-        console.log(inspect(updates, { showHidden: false, depth: null }));
-        await Promise.all(updates.map(update => {
-            const html = handlebars.templates.REPORT({ update });
-
-            console.log('html: ', html);
-
-            return this.sendMessage('238585617', html);
-        }));
+        // console.log(inspect(updates, { showHidden: false, depth: null }));
+        await Promise.all(updates.map(this.processUpdate));
     }
 
     getUpdates = async () => {
@@ -59,9 +64,7 @@ class TelegramApi {
             text
         });
 
-        console.log('data: ', data);
-
-        return data;
+        return dumpMessage(data);
     }
 }
 
