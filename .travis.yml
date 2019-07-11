@@ -11,10 +11,19 @@ jobs:
     - stage: release
       node_js: lts/*
       deploy:
-        provider: script
-        skip_cleanup: true
-        script:
-          - npx semantic-release
+        - provider: script
+          on:
+            branch: master
+          skip_cleanup: true
+          script:
+            - npx semantic-release
+        - provider: heroku
+          on:
+            branch: master
+          skip_cleanup: true
+          api_key:
+            secure: $HEROKU_API_KEY
+          app: telegram-explorer
 notifications:
   email:
     recipients: dipustovit@gmail.com

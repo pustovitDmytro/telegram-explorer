@@ -1,7 +1,7 @@
 {
   "name": "telegram-explorer",
   "version": "0.0.1",
-  "description": "",
+  "description": "telegram echo bot",
   "main": "./lib",
   "config": {
     "MOCHA_OPTS": "--timeout 60000 --exit --reporter spec --ui qunit tests/**/*.js"

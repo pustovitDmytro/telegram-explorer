@@ -1,4 +1,5 @@
 import express from 'express';
+import { version, description } from '../package.json';
 
 const router = express.Router();
 
@@ -8,8 +9,8 @@ router.get('/health', (req, res) => {
 
 router.get('/info', (req, res) => {
     res.send({
-        version : '0.0.1',
-        service : 'Telegram Bot'
+        version,
+        description
     });
 });
 
