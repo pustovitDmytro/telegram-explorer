@@ -1,0 +1,9 @@
+{
+    "bot_id":"000000000",
+    "bot_token":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "polling": "2s",
+    "host": "http://localhost:8080",
+    "port": 8080,
+    "webhook": "<random string>",
+    "prefix":"/api/v1"
+}
