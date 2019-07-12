@@ -1,16 +1,9 @@
 import express from 'express';
-import { version, description } from '../../package.json';
+import controllers from './expressControllers';
 
 const router = express.Router();
 
-router.get('/health', (req, res) => res.sendStatus(200));
-
-router.get('/info', (req, res) => {
-    res.send({
-        version,
-        description,
-        status : 1
-    });
-});
+router.get('/health', controllers.system.health);
+router.get('/info', controllers.system.info);
 
 export default router;
