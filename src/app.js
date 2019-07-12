@@ -1,6 +1,6 @@
 import './lib/telegram';
 import express  from 'express';
-import router   from './router';
+import router   from './controllers/router';
 import config   from './config';
 
 const { port, prefix } = config;
@@ -11,3 +11,6 @@ app.use(prefix, router);
 app.listen(port, () => {
     console.log(`APP STARTING AT ${port} PORT`);
 });
+
+export default app;
+

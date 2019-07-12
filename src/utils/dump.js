@@ -50,7 +50,7 @@ export function dumpChat(chat) {
 }
 
 export function dumpSticker(sticker) {
-    if (!sticker) return null;
+    if (!sticker) return undefined;
 
     return {
         id     : sticker.file_id,

@@ -1,25 +1,25 @@
 language: node_js
 node_js:
   - "node"
-  - "10"
+  - "lts/*"
 jobs:
   include:
     - stage: test
       script: "npm run test:lint"
     - stage: test
       script: "npm run test:security"
+    - stage: test
+      script: "npm run test:mocha"
     - stage: release
       node_js: lts/*
+      on:
+          branch: master
       deploy:
         - provider: script
-          on:
-            branch: master
           skip_cleanup: true
           script:
             - npx semantic-release
         - provider: heroku
-          on:
-            branch: master
           skip_cleanup: true
           api_key:
             secure: $HEROKU_API_KEY

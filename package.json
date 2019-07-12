@@ -3,15 +3,12 @@
   "version": "1.0.0",
   "description": "telegram echo bot",
   "main": "./lib",
-  "config": {
-    "MOCHA_OPTS": "--timeout 60000 --exit --reporter spec --ui qunit tests/**/*.js"
-  },
   "scripts": {
     "build": "babel src --out-dir ./build",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "test:security": "npm audit",
     "test:lint": "eslint src",
-    "test:mocha": "mocha  --require @babel/register $npm_package_config_MOCHA_OPTS",
+    "test:mocha": "mocha  --config .mocharc.json tests/**/*.js",
     "test:coverage": "MODE=test nyc mocha $npm_package_config_MOCHA_OPTS",
     "coverage-check": "MODE=test nyc check-coverage",
     "test": "npm run test:lint && npm run test:security",
@@ -60,7 +57,8 @@
     "eslint-plugin-react": "^7.12.4",
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
-    "semantic-release": "^15.13.14"
+    "semantic-release": "^15.13.14",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "axios": "^0.19.0",

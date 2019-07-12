@@ -4,6 +4,8 @@
 // CONFLICT
 // INTERNAL_SERVER_ERROR
 
+export const unknown = 'UNKNOWN_ERROR';
+
 export default {
     TELEGRAM_API_ERROR : 'INTERNAL_SERVER_ERROR',
     UNKNOWN_ERROR      : 'INTERNAL_SERVER_ERROR'
