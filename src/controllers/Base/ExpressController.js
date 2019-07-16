@@ -4,6 +4,7 @@ import Base from './BaseController';
 export default class ExpressController extends Base {
     static paramsBuilder = req => ({ ...req.query, ...req.params, ...req.body })
     static contexBuilder = req => req._context
+    static optionsBuilder = () => ({ confirm: true, verbose: false, quiet: false })
 
     async serviceRunner({
         serviceClass,
