@@ -8,7 +8,7 @@
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "test:security": "npm audit",
     "test:lint": "eslint src",
-    "test:mocha": "mocha  --config .mocharc.json tests/**/*.js",
+    "test:mocha": "MODE=test mocha --config .mocharc.json tests/**/*.js",
     "test:coverage": "MODE=test nyc mocha $npm_package_config_MOCHA_OPTS",
     "coverage-check": "MODE=test nyc check-coverage",
     "test": "npm run test:lint && npm run test:security",
@@ -63,6 +63,8 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "fs-extra": "^8.0.1",
     "handlebars": "^4.1.2",

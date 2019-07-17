@@ -42,19 +42,26 @@ export default class DocoptController extends Base {
         optionsBuilder = DocoptController.optionsBuilder
     }, opts) {
         const noExit  = opts['--no-exit'];
+        const options = optionsBuilder(opts);
         // const runService = log(this.runService);
         const runService = this.runService;
         const promise = runService(serviceClass, {
             params  : paramsBuilder(opts),
             context : contexBuilder(opts),
-            options : optionsBuilder(opts)
+            options
         });
+
         const data = await this.run(promise);
 
-        console.log('data: ', data);
-
-        if (!noExit) {
-            process.exit(0);
+        if (noExit) {
+            return data;
         }
+        const exitCode = data.status ? 0 : 1;
+
+        if (!options.quiet) {
+            console.log(data);
+        }
+
+        process.exit(exitCode);
     }
 }

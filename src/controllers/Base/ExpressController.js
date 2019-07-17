@@ -1,4 +1,3 @@
-// import { log } from '../../logger';
 import Base from './BaseController';
 
 export default class ExpressController extends Base {
@@ -11,9 +10,7 @@ export default class ExpressController extends Base {
         paramsBuilder = ExpressController.paramsBuilder,
         contexBuilder = ExpressController.contexBuilder
     }, req, res) {
-        // const runService = log(this.runService);
-        const runService = this.runService;
-        const promise = runService(serviceClass, {
+        const promise = this.runService(serviceClass, {
             params  : paramsBuilder(req, res),
             context : contexBuilder(req, res)
         });

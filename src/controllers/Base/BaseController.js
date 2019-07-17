@@ -1,6 +1,7 @@
 import X from 'errors/X';
 import BaseService from 'services/Base';
 import { isObject } from 'utils/common';
+import { log } from 'lib/logger';
 
 function buildController(o, makeServiceRunner) {
     const build = {};
@@ -29,10 +30,10 @@ export default class BaseController {
         }
     }
 
-    runService(Service, { context, params }) {
+    runService(Service, { context, params, options }) {
         const service = new Service({ context });
 
-        return service.run(params);
+        return log(service.run).call(service, params, options);
     }
 
     async run(promise) {

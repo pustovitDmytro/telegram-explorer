@@ -3,14 +3,16 @@ import ms from 'ms';
 import AxiosError from 'errors/AxiosError';
 
 export default class Api {
-    constructor({ timeout, url }) {
+    constructor({ timeout, url, mock }) {
         this.timeout = ms(timeout);
         this.url = url;
+        this.mock = mock;
     }
     _getUrl(url) {
         return `${this.url}${url}`;
     }
     async request(method, url, options) {
+        if (this.mock) return;
         try {
             const response = await axios({
                 timeout : this.timeout,

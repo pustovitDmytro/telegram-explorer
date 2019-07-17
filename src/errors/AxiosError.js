@@ -2,6 +2,7 @@ import X from './X';
 
 export default class AxiosError extends X {
     constructor(error) {
+        if (error instanceof X) return error;
         super(error);
         this.parent = error;
     }

@@ -1,16 +1,18 @@
 // import { inspect } from 'util';
 import ms from 'ms';
 import config from 'config';
-import { dumpUpdate, dumpMessage } from 'utils/dump';
 import TelegramApiClient from '../api/TelegramApiClient';
 import Poll from './polling';
 import handlebars from './handlebars';
+
+const isTest = process.env.MODE === 'test';
 
 class TelegramApi {
     constructor({ id, token, polling }) {
         this.api = new TelegramApiClient({
             timeout : '10s',
-            url     : `https://api.telegram.org/bot${id}:${token}`
+            url     : `https://api.telegram.org/bot${id}:${token}`,
+            mock    : isTest
         });
         this.ready = this._init({ polling });
     }
@@ -18,7 +20,6 @@ class TelegramApi {
         if (polling) return this._initPolling(polling);
     }
     _initPolling(pollingTime) {
-        this.lastUpdate = 0;
         this.pollTimeout = ms(pollingTime);
         const poll = new Poll({
             timeout : this.pollTimeout,
@@ -34,37 +35,25 @@ class TelegramApi {
 
         return this.sendMessage(message.from.id, html);
     }
-    polling = async () => {
-        const updates = await this.getUpdates();
 
-        await handlebars.ready;
+    polling = async () => {
+        const updates = await this.api.getUpdates(this.lastUpdate);
 
         if (updates.length) {
             this.lastUpdate = updates[updates.length - 1].id;
         }
 
-        // console.log(inspect(updates, { showHidden: false, depth: null }));
         await Promise.all(updates.map(this.processUpdate));
     }
 
-    getUpdates = async () => {
-        const data = await this.api.get('/getUpdates', {
-            limit  : 10,
-            offset : this.lastUpdate + 1
-            // timeout : this.pollTimeout
-        });
-
-        return data.map(dumpUpdate);
+    sendMessage(chat, message) {
+        return this.api.sendMessage(chat.id, message);
     }
-
-    async sendMessage(chatId, text) {
-        const data = await this.api.post('/sendMessage', {
-            'parse_mode' : 'HTML',
-            'chat_id'    : chatId,
-            text
-        });
-
-        return dumpMessage(data);
+    setWebhook(url) {
+        return this.api.setWebhook(url);
+    }
+    getWebhook() {
+        return this.api.getWebhook();
     }
 }
 

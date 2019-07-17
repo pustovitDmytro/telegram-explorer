@@ -1,8 +1,10 @@
 import TelegramApiError from 'errors/TelegramApiError';
+import { dumpUpdate, dumpMessage } from 'utils/dump';
 import ApiClient from './ApiClient';
 
 export default class TelegramApiClient extends ApiClient {
     async request() {
+        if (this.mock) return;
         try {
             const response = await super.request(...arguments);
 
@@ -13,5 +15,39 @@ export default class TelegramApiClient extends ApiClient {
             if (error instanceof TelegramApiError) throw error;
             throw new TelegramApiError(error);
         }
+    }
+
+    async getUpdates(lastUpdate = 0) {
+        if (this.mock) return [];
+        const data = await this.get('/getUpdates', {
+            limit  : 10,
+            offset : lastUpdate + 1
+        });
+
+        return data.map(dumpUpdate);
+    }
+
+    async sendMessage(chatId, html) {
+        const data = await this.post('/sendMessage', {
+            'parse_mode' : 'HTML',
+            'chat_id'    : chatId,
+            text         : html
+        });
+
+        return dumpMessage(data);
+    }
+
+    async setWebhook(url) {
+        const data = await this.post('/setWebhook', {
+            url
+        });
+
+        if (data) return url;
+    }
+
+    async getWebhook() {
+        const data = await this.get('/getWebhookInfo');
+
+        return data.url;
     }
 }
