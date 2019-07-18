@@ -1,3 +1,22 @@
+# [1.1.0](https://github.com/pustovitDmytro/telegram-explorer/compare/v1.0.0...v1.1.0) (2019-07-18)
+
+
+### Chore
+
+* add ExpressController ([a1fbb3af66662ac3fc49fc3fc0ad066637bfb228](https://github.com/pustovitDmytro/telegram-explorer/commit/a1fbb3af66662ac3fc49fc3fc0ad066637bfb228))
+* add mocha tests ([a18f39153bea041c58ed9b75e3e0df1bafd2c2d6](https://github.com/pustovitDmytro/telegram-explorer/commit/a18f39153bea041c58ed9b75e3e0df1bafd2c2d6))
+
+### Chrore
+
+* environment tests ([d60790d14427542b95bf6ecadb779c997e0c2b02](https://github.com/pustovitDmytro/telegram-explorer/commit/d60790d14427542b95bf6ecadb779c997e0c2b02))
+
+### New
+
+* add DocoptController abstraction ([4ff0c22ea3e6707128e9c7b119affd64406909c3](https://github.com/pustovitDmytro/telegram-explorer/commit/4ff0c22ea3e6707128e9c7b119affd64406909c3))
+* add health binaries ([f4f6a4791d7898bd4b3dd260d6bde2c87c2f20ec](https://github.com/pustovitDmytro/telegram-explorer/commit/f4f6a4791d7898bd4b3dd260d6bde2c87c2f20ec))
+* init telegram with webhook alongside polling ([1820db2a7824564bcbb70885706a408fd9bda2b6](https://github.com/pustovitDmytro/telegram-explorer/commit/1820db2a7824564bcbb70885706a408fd9bda2b6))
+* process update on webhook ([3e5d8ca9c70105e934f75db13a2adf4ee497a428](https://github.com/pustovitDmytro/telegram-explorer/commit/3e5d8ca9c70105e934f75db13a2adf4ee497a428))
+
 # 1.0.0 (2019-07-11)
 
 
