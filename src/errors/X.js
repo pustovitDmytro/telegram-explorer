@@ -4,10 +4,10 @@ import errors, { unknown } from 'constants/errors';
 export default class X extends Error {
     constructor(error) {
         super();
-        if (error instanceof X) return error;
         this.name = this.constructor.name;
         Error.captureStackTrace(this, this.constructor);
-        this.parent = error;
+        this.stack = error.stack;
+        this.message = error.message;
     }
 
     static stringify(data) {
@@ -16,10 +16,6 @@ export default class X extends Error {
             depth       : null,
             breakLength : 'Infinity'
         });
-    }
-
-    get stack() {
-        return this.parent.stack;
     }
 
     render() {

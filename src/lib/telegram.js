@@ -1,13 +1,15 @@
 // import { inspect } from 'util';
 import ms from 'ms';
 import config from 'config';
+import { log } from 'lib/logger';
 import TelegramApiClient from '../api/TelegramApiClient';
 import Poll from './polling';
 import handlebars from './handlebars';
 
 const isTest = process.env.MODE === 'test';
 
-class TelegramApi {
+@log
+class Telegram {
     constructor({ id, token, polling, mode, webhookUrl }) {
         this.api = new TelegramApiClient({
             timeout : '10s',
@@ -64,7 +66,7 @@ class TelegramApi {
     }
 }
 
-export default new TelegramApi({
+export default new Telegram({
     id         : config.bot_id,
     token      : config.bot_token,
     polling    : config.polling,

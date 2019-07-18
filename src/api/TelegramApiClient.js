@@ -1,19 +1,20 @@
-import TelegramApiError from 'errors/TelegramApiError';
+import TelegramError from 'errors/TelegramError';
 import { dumpUpdate, dumpMessage } from 'utils/dump';
+import { log } from 'lib/logger';
 import ApiClient from './ApiClient';
 
 export default class TelegramApiClient extends ApiClient {
+    @log
     async request() {
         if (this.mock) return;
         try {
             const response = await super.request(...arguments);
 
-            if (!response.ok) throw new TelegramApiError(response);
+            if (!response.ok) throw new TelegramError(response);
 
             return response.result;
         } catch (error) {
-            if (error instanceof TelegramApiError) throw error;
-            throw new TelegramApiError(error);
+            throw new TelegramError(error);
         }
     }
 

@@ -9,10 +9,10 @@ jobs:
     - stage: test
       script: "npm run test:mocha"
     - stage: test
-      on:
-          branch: master
-      script: "npm run test"
-      node_js: "8"
+      branches:
+        only: master
+      script: "npm run test:mocha"
+      node_js: "6.x"
     - stage: release
       on:
           branch: master
