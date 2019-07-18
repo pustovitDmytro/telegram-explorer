@@ -1,7 +1,5 @@
 language: node_js
-node_js:
-  - "node"
-  - "lts/*"
+node_js: "lts/*"
 jobs:
   include:
     - stage: test
@@ -10,8 +8,12 @@ jobs:
       script: "npm run test:security"
     - stage: test
       script: "npm run test:mocha"
+    - stage: test
+      on:
+          branch: master
+      script: "npm run test"
+      node_js: "8"
     - stage: release
-      node_js: lts/*
       on:
           branch: master
       deploy:
