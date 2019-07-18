@@ -12,7 +12,10 @@ jobs:
       branches:
         only: master
       script: "npm run test:mocha"
-      node_js: "6.x"
+      node_js:
+        - "6"
+        - "7"
+        - "8"
     - stage: release
       on:
           branch: master
