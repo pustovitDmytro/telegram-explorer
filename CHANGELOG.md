@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/pustovitDmytro/telegram-explorer/compare/v1.1.0...v1.1.1) (2019-07-18)
+
+
+### Fix
+
+* additional logging on API errors ([cd97f711ace535fc5393c03b60356d47402ea783](https://github.com/pustovitDmytro/telegram-explorer/commit/cd97f711ace535fc5393c03b60356d47402ea783))
+
 # [1.1.0](https://github.com/pustovitDmytro/telegram-explorer/compare/v1.0.0...v1.1.0) (2019-07-18)
 
 
