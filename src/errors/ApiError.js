@@ -24,7 +24,9 @@ export default class ApiError extends X {
 
     _getMessage(error) {
         const config = error.config;
-        const responce = error.responce.status;
+        const responce = {
+            status : error.responce?.status
+        };
 
         return X.stringify({
             code    : error.code,

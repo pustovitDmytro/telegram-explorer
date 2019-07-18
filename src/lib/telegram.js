@@ -42,7 +42,7 @@ class Telegram {
         const { message } = update;
         const html = handlebars.templates.REPORT({ message });
 
-        return this.sendMessage(message.from.id, html);
+        return this.sendMessage(message.from, html);
     }
 
     polling = async () => {
