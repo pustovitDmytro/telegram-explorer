@@ -8,16 +8,15 @@ import handlebars from './handlebars';
 const isTest = process.env.MODE === 'test';
 
 class TelegramApi {
-    constructor({ id, token, polling }) {
+    constructor({ id, token, polling, mode, webhookUrl }) {
         this.api = new TelegramApiClient({
             timeout : '10s',
             url     : `https://api.telegram.org/bot${id}:${token}`,
             mock    : isTest
         });
-        this.ready = this._init({ polling });
-    }
-    _init({ polling }) {
-        if (polling) return this._initPolling(polling);
+
+        if (mode === 'polling') this._initPolling(polling);
+        if (mode === 'webhook') this._initWebhook(webhookUrl);
     }
     _initPolling(pollingTime) {
         this.pollTimeout = ms(pollingTime);
@@ -28,6 +27,14 @@ class TelegramApi {
 
         poll.start();
         console.log(`POLLING STARTED WITH INTERVAL ${pollingTime}`);
+    }
+    async _initWebhook(webhookUrl) {
+        if (webhookUrl !== this.getWebhook()) {
+            await this.setWebhook(webhookUrl);
+            console.log(`WEBHOOK_URL SET TO ${webhookUrl}`);
+        } else {
+            console.log(`WEBHOOK_URL HAS ALREADY SET TO ${webhookUrl}`);
+        }
     }
     processUpdate = update => {
         const { message } = update;
@@ -58,8 +65,10 @@ class TelegramApi {
 }
 
 export default new TelegramApi({
-    id      : config.bot_id,
-    token   : config.bot_token,
-    polling : config.polling
+    id         : config.bot_id,
+    token      : config.bot_token,
+    polling    : config.polling,
+    mode       : config.updates_mode,
+    webhookUrl : `${config.host}${config.prefix}/updates/${config.webhook}`
 });
 
