@@ -1,4 +1,4 @@
-// import { log } from '../../logger';
+import logger from 'lib/logger';
 import Base from './BaseController';
 
 function docoptKey(key) {
@@ -43,7 +43,6 @@ export default class DocoptController extends Base {
     }, opts) {
         const noExit  = opts['--no-exit'];
         const options = optionsBuilder(opts);
-        // const runService = log(this.runService);
         const runService = this.runService;
         const promise = runService(serviceClass, {
             params  : paramsBuilder(opts),
@@ -53,14 +52,15 @@ export default class DocoptController extends Base {
 
         const data = await this.run(promise);
 
+        if (!options.quiet) {
+            logger.log(data);
+        }
+
         if (noExit) {
             return data;
         }
-        const exitCode = data.status ? 0 : 1;
 
-        if (!options.quiet) {
-            console.log(data);
-        }
+        const exitCode = data.status ? 0 : 1;
 
         process.exit(exitCode);
     }

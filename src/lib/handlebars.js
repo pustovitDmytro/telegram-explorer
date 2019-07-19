@@ -1,6 +1,7 @@
-import path from 'path';
-import handlebars            from 'handlebars';
-import fs from 'fs-extra';
+import path       from 'path';
+import handlebars from 'handlebars';
+import fs         from 'fs-extra';
+import logger     from 'lib/logger';
 
 handlebars.registerHelper('json', function (object) {
     return JSON.stringify(object, null, 4);
@@ -12,10 +13,9 @@ handlebars.registerHelper('lower', function (string) {
 
 class Handlebars {
     constructor({ templatesFolder }) {
-        this.ready = this._initTemplates(templatesFolder);
-        // TODO async loading
+        this.ready = this._init(templatesFolder);
     }
-    async _initTemplates(folder) {
+    async _init(folder) {
         const templateFileNames = await fs.readdir(folder);
 
         this.templateNames = templateFileNames.map(filename => path.basename(filename, '.html'));
@@ -26,10 +26,10 @@ class Handlebars {
 
             this.templates[name] = handlebars.compile(content.toString());
         }));
+        logger.verbose('HANDLEBARS TEMPLATES READY');
     }
 }
 
 export default new Handlebars({
     templatesFolder : path.join(__dirname, '../../templates/')
 });
-

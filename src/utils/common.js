@@ -1,3 +1,5 @@
+import ms from 'ms';
+
 export function clone(x) {
     return JSON.parse(JSON.stringify(x));
 }
@@ -34,4 +36,8 @@ export function toArray(value) {
     if (!value) return [];
 
     return isArray(value) ? value : [ value ];
+}
+
+export function pause(time) {
+    return new Promise(res => setTimeout(res, ms(time)));
 }

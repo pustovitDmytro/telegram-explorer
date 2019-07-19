@@ -1,7 +1,7 @@
 // import { inspect } from 'util';
 import ms from 'ms';
 import config from 'config';
-import { log } from 'lib/logger';
+import logger, { log } from 'lib/logger';
 import TelegramApiClient from '../api/TelegramApiClient';
 import Poll from './polling';
 import handlebars from './handlebars';
@@ -16,9 +16,11 @@ class Telegram {
             url     : `https://api.telegram.org/bot${id}:${token}`,
             mock    : isTest
         });
-
+        this.ready = this._init(polling, mode, webhookUrl);
+    }
+    async _init({ mode, polling, webhookUrl }) {
         if (mode === 'polling') this._initPolling(polling);
-        if (mode === 'webhook') this._initWebhook(webhookUrl);
+        if (mode === 'webhook') await this._initWebhook(webhookUrl);
     }
     _initPolling(pollingTime) {
         this.pollTimeout = ms(pollingTime);
@@ -28,14 +30,14 @@ class Telegram {
         });
 
         poll.start();
-        console.log(`POLLING STARTED WITH INTERVAL ${pollingTime}`);
+        logger.verbose(`POLLING STARTED WITH INTERVAL ${pollingTime}`);
     }
     async _initWebhook(webhookUrl) {
         if (webhookUrl !== this.getWebhook()) {
             await this.setWebhook(webhookUrl);
-            console.log(`WEBHOOK_URL SET TO ${webhookUrl}`);
+            logger.verbose(`WEBHOOK_URL SET TO ${webhookUrl}`);
         } else {
-            console.log(`WEBHOOK_URL HAS ALREADY SET TO ${webhookUrl}`);
+            logger.verbose(`WEBHOOK_URL HAS BEEN ALREADY SET TO ${webhookUrl}`);
         }
     }
     processUpdate = update => {

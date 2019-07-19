@@ -1,30 +1,53 @@
 import path from 'path';
 import fs from 'fs-extra';
+import logger from 'lib/logger';
 
-function loadJSON(filePath, defaults = {}) {
+async function loadJSON(filePath) {
     const file = path.resolve(__dirname, filePath);
+    const exists = await fs.exists(file);
 
-    return fs.existsSync(file)  // eslint-disable-line no-sync
-        ? JSON.parse(fs.readFileSync(file, 'utf8')) // eslint-disable-line no-sync
-        : defaults;
+    if (exists) {
+        const json = await fs.readFile(file, 'utf8');
+
+        return JSON.parse(json);
+    }
+}
+async function buildConfig() {
+    const [ confDefaults = {}, confCommon = {} ] = await Promise.all([
+        '../etc/config.json.defaults',
+        '../etc/config.json'
+    ].map(loadJSON));
+
+    const appConfig = {
+        ...confDefaults,
+        ...confCommon
+    };
+    const env = {};
+
+    Object.entries(process.env)
+        .forEach(([ key, value ]) => {
+            env[key.toLowerCase()] = value;
+        });
+
+    return {
+        ...appConfig,
+        ...env
+    };
 }
 
-const appConfig = {
-    ...loadJSON('../etc/config.json.defaults'),
-    ...loadJSON('../etc/config.json')
-};
-const env = {};
+class Config {
+    constructor() {
+        this.ready = this._init();
+    }
+    async _init() {
+        const config = await buildConfig();
 
-Object.entries(process.env)
-    .forEach(([ key, value ]) => {
-        env[key.toLowerCase()] = value;
-    });
+        logger.verbose('CONFIG LOADED');
+        Object.entries(config)
+            .forEach(([ key, value ]) => {
+                this[key] = value;
+            });
+    }
+}
 
-// TODO validate
-// TODO async loading
-
-export default {
-    ...appConfig,
-    ...env
-};
-
+export default new Config();
