@@ -31,9 +31,9 @@ export default class BaseController {
     }
 
     runService(Service, { context, params, options }) {
-        const service = new Service({ context });
+        const service = new Service({ context, options });
 
-        return log(service.run).call(service, params, options);
+        return log(service.run).call(service, params); // TODO put valid methodName here
     }
 
     async run(promise) {

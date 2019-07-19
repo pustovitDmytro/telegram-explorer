@@ -5,11 +5,11 @@ import Base from './Base';
 const webhookUrl = `${config.host}${config.prefix}/updates/${config.webhook}`;
 
 export default class SetWebhook extends Base {
-    async run({ url = webhookUrl }, options) {
+    async run({ url = webhookUrl }) {
         let current = await telegram.getWebhook();
 
-        if (options.verbose) console.log('current WebhookUrl: ', current);
-        if (options.confirm) {
+        this.verbose('current WebhookUrl: ', current);
+        if (this.confirm) {
             current = await telegram.setWebhook(url);
         }
 
