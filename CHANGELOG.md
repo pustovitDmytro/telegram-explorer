@@ -1,3 +1,14 @@
+## [1.1.2](https://github.com/pustovitDmytro/telegram-explorer/compare/v1.1.1...v1.1.2) (2019-07-18)
+
+
+### Chore
+
+* (refactor) remove waste logs ([5e92b6b416312b13f7006ba5257dd66aaa06491b](https://github.com/pustovitDmytro/telegram-explorer/commit/5e92b6b416312b13f7006ba5257dd66aaa06491b))
+
+### Fix
+
+* chat instead of chatId in sendMessage ([5baf92b5f4f96731fc2b52c80bfc1a299ee98f30](https://github.com/pustovitDmytro/telegram-explorer/commit/5baf92b5f4f96731fc2b52c80bfc1a299ee98f30))
+
 ## [1.1.1](https://github.com/pustovitDmytro/telegram-explorer/compare/v1.1.0...v1.1.1) (2019-07-18)
 
 

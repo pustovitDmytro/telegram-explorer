@@ -21,6 +21,7 @@
         {
           "root": ["./src"],
           "alias": {
+            "src": "./src",
             "utils": "./src/utils",
             "lib": "./src/lib",
             "errors": "./src/errors",

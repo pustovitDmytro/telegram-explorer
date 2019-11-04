@@ -1,5 +1,6 @@
 import supertest from 'supertest';
-import nodeApp from 'app';
+import 'src/load';
+import nodeApp from 'src/app';
 
 supertest.agent(nodeApp);
 

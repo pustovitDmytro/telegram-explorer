@@ -5,7 +5,7 @@ import middlewares from 'controllers/express/middlewares';
 import logger from 'lib/logger';
 import config   from './config';
 
-const { port, prefix } = config;
+const { port, prefix } = config.app;
 const app = express();
 
 app.use(middlewares.json);
@@ -15,11 +15,8 @@ app.use(middlewares.arrays);
 
 app.use(prefix, router);
 
-export const ready = new Promise(res => {
-    app.listen(port, () => {
-        res();
-        logger.log(`APP STARTING AT ${port} PORT`);
-    });
+app.listen(port, () => {
+    logger.log(`APP STARTING AT ${port} PORT`);
 });
 
 export default app;

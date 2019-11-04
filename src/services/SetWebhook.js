@@ -1,8 +1,8 @@
 import telegram from 'lib/telegram';
-import config from 'config';
+import { app, updates } from 'src/config';
 import Base from './Base';
 
-const webhookUrl = `${config.host}${config.prefix}/updates/${config.webhook}`;
+const webhookUrl = `${app.url}${app.prefix}/updates/${updates.webhook}`;
 
 export default class SetWebhook extends Base {
     async run({ url = webhookUrl }) {

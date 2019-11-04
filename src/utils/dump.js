@@ -1,3 +1,7 @@
+function formatDate(tgDate) {
+    return (new Date(tgDate * 1000)).toISOString();
+}
+
 export function dumpUpdate(update) {
     return {
         id      : update.update_id,
@@ -7,28 +11,42 @@ export function dumpUpdate(update) {
 
 export function dumpMessage(message) {
     if (!message) return null;
+    const from = dumpSender(message.from);
+    const to = dumpSender(message.chat);
+    const forward = message.forward_from || message.forward_from_chat;
+
+    if (forward) {
+        from.forward = dumpSender(forward);
+        from.forward.date = formatDate(message.forward_date);
+    }
 
     return {
         id      : message.message_id,
-        from    : dumpUser(message.from),
-        to      : dumpChat(message.chat),
+        from,
+        to,
         payload : {
             text    : message.text,
             sticker : dumpSticker(message.sticker)
         },
-        date : new Date(message.date)
+        date : formatDate(message.date)
     };
 }
 
-export function dumpUser(user) {
-    if (!user) return null;
+export function dumpSender(s) {
+    if (!s) return null;
 
+    return s.id > 0
+        ? dumpUser(s)
+        : dumpChat(s);
+}
+
+
+export function dumpUser(user) {
     return {
-        id        : user.id,
-        type      : user.is_bot ? 'BOT' : 'USER',
-        firstName : user.first_name,
-        lastName  : user.last_name,
-        login     : user.username
+        id    : user.id,
+        type  : user.is_bot ? 'BOT' : 'USER',
+        name  : `${user.last_name || ''} ${user.first_name || ''}`.trim(),
+        login : user.username
     };
 }
 
@@ -40,12 +58,11 @@ const CHAT_TYPES = {
 };
 
 export function dumpChat(chat) {
-    if (!chat) return null;
-
     return {
         id    : chat.id,
         type  : CHAT_TYPES[chat.type],
-        title : chat.title
+        name  : chat.title,
+        login : chat.username
     };
 }
 
