@@ -1,3 +1,22 @@
+# [1.2.0](https://github.com/pustovitDmytro/telegram-explorer/compare/v1.1.1...v1.2.0) (2019-11-04)
+
+
+### Chore
+
+* (build): skip security test in ci ([30f2f0cf72e949314433eb7ada1d1eb5d5921449](https://github.com/pustovitDmytro/telegram-explorer/commit/30f2f0cf72e949314433eb7ada1d1eb5d5921449))
+* (log) service verbose logging ([5b6ba5c62774a44adcb79247bba45e026661fcac](https://github.com/pustovitDmytro/telegram-explorer/commit/5b6ba5c62774a44adcb79247bba45e026661fcac))
+* (refactor) remove waste logs ([5e92b6b416312b13f7006ba5257dd66aaa06491b](https://github.com/pustovitDmytro/telegram-explorer/commit/5e92b6b416312b13f7006ba5257dd66aaa06491b))
+
+### Fix
+
+* chat instead of chatId in sendMessage ([5baf92b5f4f96731fc2b52c80bfc1a299ee98f30](https://github.com/pustovitDmytro/telegram-explorer/commit/5baf92b5f4f96731fc2b52c80bfc1a299ee98f30))
+
+### New
+
+* adds forward sender and fixes date format ([5220029f5b56b9ffaeb6496fb148cfc65776eca4](https://github.com/pustovitDmytro/telegram-explorer/commit/5220029f5b56b9ffaeb6496fb148cfc65776eca4))
+* Async import ([05a5b081832417d989cf4e0b0c9a9e73289576a6](https://github.com/pustovitDmytro/telegram-explorer/commit/05a5b081832417d989cf4e0b0c9a9e73289576a6))
+* config from env ([ce1c65e03166b969f20fb9e64a3d2c4e966b4caf](https://github.com/pustovitDmytro/telegram-explorer/commit/ce1c65e03166b969f20fb9e64a3d2c4e966b4caf))
+
 ## [1.1.2](https://github.com/pustovitDmytro/telegram-explorer/compare/v1.1.1...v1.1.2) (2019-07-18)
 
 
