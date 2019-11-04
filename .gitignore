@@ -1,5 +1,4 @@
 node_modules
-etc/*.js
-etc/*.json
 coverage/*
 build/*
+.env
