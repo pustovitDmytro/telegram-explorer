@@ -1,24 +1,28 @@
 // import { inspect } from 'util';
 import ms from 'ms';
 import config from 'config';
-import { dumpUpdate, dumpMessage } from 'utils/dump';
+import logger, { log } from 'lib/logger';
 import TelegramApiClient from '../api/TelegramApiClient';
 import Poll from './polling';
 import handlebars from './handlebars';
 
-class TelegramApi {
-    constructor({ id, token, polling }) {
+const isTest = process.env.MODE === 'test';
+
+@log
+class Telegram {
+    constructor({ bot, updates }) {
         this.api = new TelegramApiClient({
             timeout : '10s',
-            url     : `https://api.telegram.org/bot${id}:${token}`
+            url     : `https://api.telegram.org/bot${bot.id}:${bot.token}`,
+            mock    : isTest
         });
-        this.ready = this._init({ polling });
+        this._init(updates);
     }
-    _init({ polling }) {
-        if (polling) return this._initPolling(polling);
+    async _init({ mode, interval, webhook }) {
+        if (mode === 'polling') this._initPolling(interval);
+        if (mode === 'webhook') await this._initWebhook(`${config.app.url}${config.app.prefix}/updates/${webhook}`);
     }
     _initPolling(pollingTime) {
-        this.lastUpdate = 0;
         this.pollTimeout = ms(pollingTime);
         const poll = new Poll({
             timeout : this.pollTimeout,
@@ -26,51 +30,46 @@ class TelegramApi {
         });
 
         poll.start();
-        console.log(`POLLING STARTED WITH INTERVAL ${pollingTime}`);
+        logger.verbose(`POLLING STARTED WITH INTERVAL ${pollingTime}`);
+    }
+    async _initWebhook(webhookUrl) {
+        if (webhookUrl !== this.getWebhook()) {
+            await this.setWebhook(webhookUrl);
+            logger.verbose(`WEBHOOK_URL SET TO ${webhookUrl}`);
+        } else {
+            logger.verbose(`WEBHOOK_URL HAS BEEN ALREADY SET TO ${webhookUrl}`);
+        }
     }
     processUpdate = update => {
         const { message } = update;
         const html = handlebars.templates.REPORT({ message });
 
-        return this.sendMessage(message.from.id, html);
+        return this.sendMessage(message.from, html);
     }
-    polling = async () => {
-        const updates = await this.getUpdates();
 
-        await handlebars.ready;
+    polling = async () => {
+        const updates = await this.api.getUpdates(this.lastUpdate);
 
         if (updates.length) {
             this.lastUpdate = updates[updates.length - 1].id;
         }
 
-        // console.log(inspect(updates, { showHidden: false, depth: null }));
         await Promise.all(updates.map(this.processUpdate));
     }
 
-    getUpdates = async () => {
-        const data = await this.api.get('/getUpdates', {
-            limit  : 10,
-            offset : this.lastUpdate + 1
-            // timeout : this.pollTimeout
-        });
-
-        return data.map(dumpUpdate);
+    sendMessage(chat, message) {
+        return this.api.sendMessage(chat.id, message);
     }
-
-    async sendMessage(chatId, text) {
-        const data = await this.api.post('/sendMessage', {
-            'parse_mode' : 'HTML',
-            'chat_id'    : chatId,
-            text
-        });
-
-        return dumpMessage(data);
+    setWebhook(url) {
+        return this.api.setWebhook(url);
+    }
+    getWebhook() {
+        return this.api.getWebhook();
     }
 }
 
-export default new TelegramApi({
-    id      : config.bot_id,
-    token   : config.bot_token,
-    polling : config.polling
+export default new Telegram({
+    bot     : config.bot,
+    updates : config.updates
 });
 

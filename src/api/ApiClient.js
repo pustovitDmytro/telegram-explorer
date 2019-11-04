@@ -1,16 +1,18 @@
 import axios from 'axios';
 import ms from 'ms';
-import AxiosError from 'errors/AxiosError';
+import ApiError from 'errors/ApiError';
 
-export default class Api {
-    constructor({ timeout, url }) {
+export default class ApiClient {
+    constructor({ timeout, url, mock }) {
         this.timeout = ms(timeout);
         this.url = url;
+        this.mock = mock;
     }
     _getUrl(url) {
         return `${this.url}${url}`;
     }
     async request(method, url, options) {
+        if (this.mock) return;
         try {
             const response = await axios({
                 timeout : this.timeout,
@@ -21,7 +23,7 @@ export default class Api {
 
             return response.data;
         } catch (error) {
-            throw new AxiosError(error);
+            throw new ApiError(error);
         }
     }
     get(url, params) {

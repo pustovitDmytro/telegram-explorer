@@ -1,0 +1,105 @@
+[
+  {
+    "message_id": 1,
+    "from": {
+      "id": 271381498,
+      "is_bot": true,
+      "first_name": "Rooney",
+      "last_name": "Rolin",
+      "username": "csprowle0",
+      "language_code": "en"
+    },
+    "chat": {
+      "id": -1001201042076,
+      "title": "FOOTBALL.UA",
+      "username": "footballuaonline",
+      "type": "channel"
+    },
+    "date": 1554990205,
+    "text": "Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.\n\nQuisque porta volutpat erat. Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.\n\nPhasellus in felis. Donec semper sapien a libero. Nam dui.\n\nProin leo odio, porttitor id, consequat in, consequat ut, nulla. Sed accumsan felis. Ut at dolor quis odio consequat varius."
+  }, {
+    "message_id": 2,
+    "from": {
+      "id": 252828349,
+      "is_bot": false,
+      "first_name": "Bev",
+      "last_name": "Mechic",
+      "username": "hconeybeare1",
+      "language_code": "en"
+    },
+    "chat": {
+      "id": -1001201042076,
+      "title": "FOOTBALL.UA",
+      "username": "footballuaonline",
+      "type": "channel"
+    },
+    "date": 1572822555,
+    "forward_from": {
+        "id": 93372553,
+        "is_bot": true,
+        "first_name": "BotFather",
+        "username": "BotFather"
+    },
+    "forward_date": 1572822393,
+    "text": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus."
+  }, {
+    "message_id": 3,
+    "from": {
+        "id": 37493274923,
+        "is_bot": false,
+        "first_name": "Ola",
+        "last_name": "Mendoza",
+        "username": "dac@hupji.net",
+        "language_code": "ru"
+    },
+    "chat": {
+        "id": 398084023,
+        "first_name": "Lettie",
+        "last_name": "Perry",
+        "username": "degake@bul.jp",
+        "type": "private"
+    },
+    "date": 1572822927,
+    "forward_from_chat": {
+        "id": -1001201042076,
+        "title": "FOOTBALL.UA",
+        "username": "footballuaonline",
+        "type": "channel"
+    },
+    "forward_from_message_id": 11994,
+    "forward_date": 1572818280,
+    "photo": [
+        {
+            "file_id": "AgADAgADMKwxG0_j-EncVynv3kZtHnJ6XA8ABAEAAwIAA20AAxgKAQABFgQ",
+            "file_size": 18446,
+            "width": 320,
+            "height": 191
+        },
+        {
+            "file_id": "AgADAgADMKwxG0_j-EncVynv3kZtHnJ6XA8ABAEAAwIAA3gAAxkKAQABFgQ",
+            "file_size": 50055,
+            "width": 626,
+            "height": 373
+        }
+    ],
+    "caption": "Лацио одержал выездную победу над Миланом 💪\n\n\"Орлы\" впервые за 30 лет обыграли \"россонери\" в логове соперника (2:1).\n\nМилан — Лацио 1:2\nГолы: Баштуш, 28 (в свои ворота) — Иммобиле, 25, Корреа, 83",
+    "caption_entities": [
+        {
+            "offset": 0,
+            "length": 41,
+            "type": "bold"
+        },
+        {
+            "offset": 127,
+            "length": 6,
+            "type": "bold"
+        },
+        {
+            "offset": 137,
+            "length": 6,
+            "type": "bold"
+        }
+    ]
+}
+]
+  

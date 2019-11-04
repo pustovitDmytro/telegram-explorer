@@ -1,3 +1,5 @@
+import logger from 'lib/logger';
+
 export default class Poll {
     constructor({ timeout, run }) {
         this.timeout = timeout;
@@ -9,8 +11,8 @@ export default class Poll {
                 await this.run();
                 this.start();
             } catch (error) {
-                console.error('POLLING_ERROR');
-                console.error(error);
+                logger.error('POLLING_ERROR:');
+                logger.error(error);
                 this.start();
             }
         }, this.timeout);
