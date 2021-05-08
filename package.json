@@ -68,7 +68,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "fs-extra": "^8.0.1",
-    "handlebars": "^4.5.1",
+    "handlebars": "^4.7.7",
     "logger-decorator": "^1.1.0",
     "ms": "^2.1.2"
   }
